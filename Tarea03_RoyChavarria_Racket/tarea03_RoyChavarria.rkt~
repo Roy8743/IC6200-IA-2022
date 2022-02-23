@@ -175,12 +175,12 @@
 (define n12 (nodo 12 "Ricardo" 0433 7 '()))
 
 (define (insert-node-aux l padre n)
-  (cond[(equal? (first l) padre) (insert-node (first l) padre n)]
-       [else(begin (insert-node (first l) padre n)
-                   (insert-node-aux (rest l) padre n))]))
+  (cond[(empty? l) '()]
+       [else (begin (insert-node (first l) padre n)
+                    (insert-node-aux (rest l) padre n))]))
 
 (define (insert-node arb padre n)
-   (cond[(equal? arb padre) (struct-copy nodo arb [hijos (append (nodo-hijos arb) (list n))])]
+   (cond[(equal? arb padre) ( struct-copy nodo arb [ hijos (append (nodo-hijos arb) (list n))] )]
        [else(insert-node-aux (nodo-hijos arb) padre n)]))
 
 ;Eliminar un nodo (delete-node). Recibe el árbol y el nodo a eliminar. La función
@@ -203,7 +203,6 @@
 
 ;Buscar el ancestro (ancestor). Recibe un árbol y el nodo para el cual se desea
             ;buscar el ancestro.
-;(delete-node n1 n2)
 
 (define (ancestor-aux l n padre)
   (cond[(equal? '() l) '()]
@@ -214,11 +213,3 @@
 (define (ancestor arb n)
   (cond[(equal? arb n) arb]
        [else( ancestor-aux (nodo-hijos arb) n arb)]))
-
-
-;Para correr
-;(list-all-nodes n1)
-;(find-node arb n5)
-;(insert-node n1 n1 n11) y (insert-node n1 n2 n12)
-;(delete-node n1 n2)
-;(ancestor n1 n5)
